@@ -1,4 +1,4 @@
-package com.wam.lab1_maintenance.modele;
+package com.wam.lab1_maintenance.model;
 
 
 import jakarta.persistence.*;
@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tabPerson")
+@Table(name = "person")
 @Data
 @Builder
 @AllArgsConstructor
