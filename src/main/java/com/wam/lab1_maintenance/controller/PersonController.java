@@ -2,6 +2,7 @@ package com.wam.lab1_maintenance.controller;
 
 import com.wam.lab1_maintenance.modele.Person;
 import com.wam.lab1_maintenance.service.PersonService;
+import com.wam.lab1_maintenance.utils.PersonRequestBody;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,5 +29,19 @@ public class PersonController {
     @GetMapping("/persons/search")
     public List<Person> searchPerson(@RequestParam String name) {
         return personService.getPersons().stream().filter(person -> person.getName().startsWith(name)).collect(Collectors.toList());
+    }
+
+    @PostMapping("/persons")
+    public Person createPerson(@RequestBody PersonRequestBody body) {
+        return personService.createPerson(body);
+    }
+
+    @PutMapping("/persons/{id}")
+    public Person updatePerson(@PathVariable Integer id, @RequestBody PersonRequestBody body) {
+        return personService.updatePerson(body, id);
+    }
+    @DeleteMapping("/persons/{id}")
+    public Person deletePerson(@PathVariable Integer id) {
+        return personService.deletePerson(id);
     }
 }
