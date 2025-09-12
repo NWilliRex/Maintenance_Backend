@@ -1,6 +1,6 @@
 package com.wam.lab1_maintenance.controller;
 
-import com.wam.lab1_maintenance.modele.Person;
+import com.wam.lab1_maintenance.model.Person;
 import com.wam.lab1_maintenance.service.PersonService;
 import com.wam.lab1_maintenance.utils.PersonRequestBody;
 import lombok.AllArgsConstructor;
@@ -28,7 +28,7 @@ public class PersonController {
 
     @GetMapping("/persons/search")
     public List<Person> searchPerson(@RequestParam String name) {
-        return personService.getPersons().stream().filter(person -> person.getName().startsWith(name)).collect(Collectors.toList());
+        return personService.searchPerson(name);
     }
 
     @PostMapping("/persons")

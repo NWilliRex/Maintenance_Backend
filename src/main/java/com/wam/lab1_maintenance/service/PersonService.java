@@ -1,6 +1,6 @@
 package com.wam.lab1_maintenance.service;
 
-import com.wam.lab1_maintenance.modele.Person;
+import com.wam.lab1_maintenance.model.Person;
 import com.wam.lab1_maintenance.repository.PersonRepository;
 import com.wam.lab1_maintenance.utils.PersonRequestBody;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,12 +16,11 @@ public class PersonService {
     private final PersonRepository personRepository;
 
     public List<Person> getPersons() {
-        return List.of(
-                Person.builder().name("Alexandre").age(20).gender("male").build(),
-                Person.builder().name("William").age(21).gender("male").build(),
-                Person.builder().name("Tarek").age(18).gender("male").build(),
-                Person.builder().name("Marc-Antoine").age(20).gender("male").build()
-        );
+        return personRepository.findAll();
+    }
+
+    public List<Person> searchPerson(String name){
+        return personRepository.findByNameStartingWithIgnoreCase(name);
     }
 
     public Person createPerson(PersonRequestBody body) {
