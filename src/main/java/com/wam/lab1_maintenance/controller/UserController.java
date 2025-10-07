@@ -15,10 +15,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    //cacher par allargsconstructor
-    //public MaisonController(MaisonService maisonService) {
-    //    this.maisonService = maisonService;
-    //}
 
     @GetMapping("/getAll")
     public List<User> getAllPerson() {
