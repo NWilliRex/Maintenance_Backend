@@ -1,4 +1,4 @@
-INSERT INTO person (name, gender, age) VALUES
+INSERT INTO user (name, gender, age) VALUES
                                            ('Schutt', 'MALE', 19),
                                            ('Cauldfield', 'FEMALE', 20),
                                            ('Caldecutt', 'BIGENDER', 21),
