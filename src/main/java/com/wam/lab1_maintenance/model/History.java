@@ -19,8 +19,8 @@ public class History {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "serie_id")
-    private Series series;
+    @JoinColumn(name = "episode_id")
+    private Episode episode;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
