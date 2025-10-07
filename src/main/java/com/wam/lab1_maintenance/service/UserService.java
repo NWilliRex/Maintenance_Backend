@@ -2,7 +2,7 @@ package com.wam.lab1_maintenance.service;
 
 import com.wam.lab1_maintenance.model.User;
 import com.wam.lab1_maintenance.repository.UserRepository;
-import com.wam.lab1_maintenance.utils.PersonRequestBody;
+import com.wam.lab1_maintenance.request.PersonRequestBody;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class UserService {
     }
 
     public List<User> searchPerson(String name){
-        return userRepository.findByNameStartingWithIgnoreCase(name);
+        return userRepository.findByFnameStartingWithIgnoreCase(name);
     }
 
     public User createPerson(PersonRequestBody body) {

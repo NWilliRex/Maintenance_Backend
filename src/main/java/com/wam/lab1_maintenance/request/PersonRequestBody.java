@@ -1,4 +1,4 @@
-package com.wam.lab1_maintenance.utils;
+package com.wam.lab1_maintenance.request;
 
 import com.wam.lab1_maintenance.model.Gender;
 

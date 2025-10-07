@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByNameStartingWithIgnoreCase(String prefix);
+    List<User> findByFnameStartingWithIgnoreCase(String prefix);
 
     Optional<User> findByCredentialUsername(String username);
 }

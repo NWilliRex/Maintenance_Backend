@@ -2,7 +2,7 @@ package com.wam.lab1_maintenance.controller;
 
 import com.wam.lab1_maintenance.model.User;
 import com.wam.lab1_maintenance.service.UserService;
-import com.wam.lab1_maintenance.utils.PersonRequestBody;
+import com.wam.lab1_maintenance.request.PersonRequestBody;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
