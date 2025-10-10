@@ -29,5 +29,5 @@ public class Series {
     private Integer nbEpisodes;
 
     @Column(name = "note")
-    private Double note;
+    private Float note;
 }

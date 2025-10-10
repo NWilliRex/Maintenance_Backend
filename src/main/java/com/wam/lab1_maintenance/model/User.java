@@ -47,9 +47,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "credential_id")
     private Credential credential;
 
-    // -----------------------
-    // UserDetails methods
-    // -----------------------
+
 
     @Override
     @JsonIgnore
