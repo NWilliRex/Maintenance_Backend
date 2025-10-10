@@ -10,6 +10,5 @@ public class Lab1MaintenanceApplication {
         SpringApplication.run(Lab1MaintenanceApplication.class, args);
     }
 
-    public static class Service {
-    }
+
 }

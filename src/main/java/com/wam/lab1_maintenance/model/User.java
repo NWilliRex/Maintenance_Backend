@@ -1,6 +1,6 @@
 package com.wam.lab1_maintenance.model;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,10 +20,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "fname", length = 25)
     private String fname;
@@ -42,44 +43,53 @@ public class User implements UserDetails {
     @Column(name = "role")
     private Role role;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "credential_id")
     private Credential credential;
 
+    // -----------------------
+    // UserDetails methods
+    // -----------------------
+
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(
-                new SimpleGrantedAuthority(this.role.name())
-        );
+        return this.role != null ? List.of(new SimpleGrantedAuthority(this.role.name())) : List.of();
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
-        return this.credential.getPassword();
+        return this.credential != null ? this.credential.getPassword() : null;
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
-        return this.credential.getUsername();
+        return this.credential != null ? this.credential.getUsername() : null;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
-        return this.credential.getIsActive();
+        return this.credential != null && this.credential.getIsActive();
     }
 }

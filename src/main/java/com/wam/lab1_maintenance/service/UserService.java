@@ -30,26 +30,21 @@ public class UserService {
                 .age(body.age())
                 .gender(body.gender())
                 .build();
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 
-    public User updatePerson(PersonRequestBody body, long id) {
+    public User updatePerson(PersonRequestBody body, Long id) {
         User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        User updateUser = User.builder()
-                .fname(body.fname() == null ? user.getFname() : body.fname())
-                .lname(body.lname() == null ? user.getLname() : body.lname())
-                .age(body.age() == null ? user.getAge() : body.age())
-                .gender(body.gender() == null ? user.getGender() : body.gender())
-                .build();
-        return userRepository.save(updateUser);
+        user.setFname(body.fname() != null ? body.fname() : user.getFname());
+        user.setLname(body.lname() != null ? body.lname() : user.getLname());
+        user.setAge(body.age() != null ? body.age() : user.getAge());
+        user.setGender(body.gender() != null ? body.gender() : user.getGender());
+        return userRepository.save(user);
     }
 
-    public User deletePerson(long id) {
+    public User deletePerson(Long id) {
         User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         userRepository.delete(user);
         return user;
     }
-
-
 }

@@ -29,3 +29,27 @@ INSERT INTO person (fname, gender, age, role) VALUES
                                                   ('Layson', 'FEMALE', 63, 'USER'),
                                                   ('Tomalin', 'MALE', 35, 'USER'),
                                                   ('Muldownie', 'MALE', 40, 'USER');
+
+INSERT INTO serie (title, genre, nb_episodes, note) VALUES
+                                                        ('Breaking Bad', 'Crime', 62, 9.5),
+                                                        ('Stranger Things', 'Science-Fiction', 34, 8.7),
+                                                        ('Game of Thrones', 'Fantasy', 73, 9.3),
+                                                        ('The Witcher', 'Fantasy', 16, 8.2),
+                                                        ('Friends', 'Comedy', 236, 8.9),
+                                                        ('The Office', 'Comedy', 201, 8.8),
+                                                        ('Dark', 'Science-Fiction', 26, 8.8),
+                                                        ('Sherlock', 'Crime', 13, 9.1),
+                                                        ('Money Heist', 'Crime', 41, 8.3),
+                                                        ('Rick and Morty', 'Animation', 61, 9.0),
+                                                        ('Avatar: The Last Airbender', 'Animation', 61, 9.2),
+                                                        ('The Mandalorian', 'Science-Fiction', 16, 8.8),
+                                                        ('The Crown', 'Drama', 60, 8.7),
+                                                        ('Better Call Saul', 'Crime', 63, 8.8),
+                                                        ('Black Mirror', 'Science-Fiction', 22, 8.8),
+                                                        ('Vikings', 'Historical', 89, 8.5),
+                                                        ('Narcos', 'Crime', 30, 8.8),
+                                                        ('The Umbrella Academy', 'Superhero', 30, 8.0),
+                                                        ('Stranger Things 2', 'Science-Fiction', 9, 8.5),
+                                                        ('House of Cards', 'Drama', 73, 8.7);
+
+

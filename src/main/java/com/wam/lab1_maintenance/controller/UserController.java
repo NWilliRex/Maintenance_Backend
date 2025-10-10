@@ -15,7 +15,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-
     @GetMapping("/getAll")
     public List<User> getAllPerson() {
         return userService.getPersons();
@@ -32,11 +31,12 @@ public class UserController {
     }
 
     @PutMapping("/persons/{id}")
-    public User updatePerson(@PathVariable Integer id, @RequestBody PersonRequestBody body) {
+    public User updatePerson(@PathVariable Long id, @RequestBody PersonRequestBody body) {
         return userService.updatePerson(body, id);
     }
+
     @DeleteMapping("/persons/{id}")
-    public User deletePerson(@PathVariable Integer id) {
+    public User deletePerson(@PathVariable Long id) {
         return userService.deletePerson(id);
     }
 }
