@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -36,6 +37,7 @@ public class RatingSerieService {
                 .series(series)
                 .user(user)
                 .userRating(rating)
+        .ratedAt(LocalDateTime.now())
                 .build();
 
         ratingSeriesRepository.save(ratingsSeries);
@@ -60,7 +62,8 @@ public class RatingSerieService {
                 .id(ratingsSeries.getId())
                 .user(ratingsSeries.getUser())
                 .series(ratingsSeries.getSeries())
-                .userRating(body.userRating() == null ? ratingsSeries.getUserRating() : body.userRating())
+        .userRating(body.userRating() == null ? ratingsSeries.getUserRating() : body.userRating())
+        .ratedAt(LocalDateTime.now())
                 .build();
 
         return ratingSeriesRepository.save(updateRatingsSeries);

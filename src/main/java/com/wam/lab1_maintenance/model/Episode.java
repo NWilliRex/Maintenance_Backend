@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Episode {
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +32,9 @@ public class Episode {
     @ManyToOne
     @JoinColumn(name = "serie_id")
     private Series serie;
+
+  
+    public void setSeries(Series series) {
+        this.serie = series;
+    }
 }

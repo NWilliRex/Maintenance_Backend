@@ -3,6 +3,7 @@ package com.wam.lab1_maintenance.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ratings")
@@ -26,4 +27,16 @@ public class RatingSeries {
 
     @Column(name="user_rating")
     private Float userRating;
+
+    @Column(name = "rated_at")
+    private LocalDateTime ratedAt;
+
+
+    public void setRating(int rating) {
+        this.userRating = (float) rating;
+    }
+
+    public void setRating(float rating) {
+        this.userRating = rating;
+    }
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Series {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "serie_id")
@@ -30,4 +30,8 @@ public class Series {
 
     @Column(name = "note")
     private Float note;
+
+
+    @Transient
+    private String description;
 }

@@ -20,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +44,45 @@ public class User implements UserDetails {
     @Column(name = "role")
     private Role role;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "credential_id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "credential_id", referencedColumnName = "credential_id")
     private Credential credential;
+
+
+    // pour setter le username
+    public void setUsername(String username) {
+        if (this.credential == null) {
+            this.credential = Credential.builder()
+                    .username(username)
+                    .password(null)
+                    .isActive(true)
+                    .build();
+        } else {
+            this.credential.setUsername(username);
+        }
+    }
+
+    // pour setter le mot de passe
+    public void setPassword(String password) {
+        if (this.credential == null) {
+            this.credential = Credential.builder()
+                    .username(null)
+                    .password(password)
+                    .isActive(true)
+                    .build();
+        } else {
+            this.credential.setPassword(password);
+        }
+    }
+
+    // pour setter les roles
+    public void setRole(String roleName) {
+        if (roleName == null) {
+            this.role = null;
+            return;
+        }
+        this.role = Role.valueOf(roleName.toUpperCase());
+    }
 
 
 

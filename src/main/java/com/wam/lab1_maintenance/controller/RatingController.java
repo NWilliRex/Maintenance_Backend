@@ -4,7 +4,6 @@ import com.wam.lab1_maintenance.model.RatingSeries;
 import com.wam.lab1_maintenance.request.RatingRequestBody;
 import com.wam.lab1_maintenance.service.RatingSerieService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
