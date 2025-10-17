@@ -79,7 +79,7 @@ public class DataSeeder implements CommandLineRunner {
      * Crée plusieurs séries avec un nombre aléatoire d’épisodes.
      * Chaque série reçoit une note moyenne et chaque épisode a sa propre note.
      */
-    private void seedSeries() {
+    public void seedSeries() {
         System.out.println("🎬 Creating series...");
 
         List<String> seriesNames = Arrays.asList(
@@ -123,7 +123,7 @@ public class DataSeeder implements CommandLineRunner {
      * Crée 25 utilisateurs avec des noms, âges et genres aléatoires.
      * Le premier utilisateur reçoit le rôle d’administrateur.
      */
-    private void seedUsers() {
+    public void seedUsers() {
         System.out.println(" Creating users...");
 
         String[] lastNames = {
@@ -152,7 +152,7 @@ public class DataSeeder implements CommandLineRunner {
      * dans leur historique pour simuler une activité plus élevée.
      * </p>
      */
-    private void seedRatingsAndHistory() {
+    public void seedRatingsAndHistory() {
         System.out.println("⭐ Generating ratings + history");
 
         List<User> users = userRepo.findAll();
