@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: maintenance_backend
+    ports:
+      - "9090:9090"
+    depends_on:
+      - mariadb
+    image: 2391650/maintenance_backend
+    networks:
+      - my-network
+
+  javadoc:
+    build:
+      context: .
+      dockerfile: Dockerfile.javadoc
+    container_name: maintenance_javadoc
+    ports:
+      - "9091:80"
+    image: 2391650/maintenance_javadoc
+    networks:
+      - my-network
+  
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=abc123
+      - MYSQL_DATABASE=bdMaintenant
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  db:

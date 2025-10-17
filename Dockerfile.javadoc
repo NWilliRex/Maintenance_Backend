@@ -1,0 +1,18 @@
+# ===============================
+# STAGE 1: Generate JavaDoc
+# ===============================
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS build
+WORKDIR /build
+COPY . .
+# Generate JavaDoc into /build/target/site/apidocs
+RUN mvn clean javadoc:javadoc
+
+# ===============================
+# STAGE 2: Serve JavaDoc
+# ===============================
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+# Copy generated docs from the build stage
+COPY --from=build /build/target/site/apidocs/ ./
+EXPOSE 9091
+CMD ["nginx", "-g", "daemon off;"]
