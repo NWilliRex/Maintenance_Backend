@@ -1,15 +1,16 @@
-FROM jenkins/jenkins:lts-jdk17
+# Utiliser Jenkins LTS basé sur Java 21
+FROM jenkins/jenkins:lts-jdk21
 
 USER root
 
-# Mise à jour et installation de Maven + Docker
+# Mise à jour + installation de Maven et Docker
 RUN apt-get update && \
     apt-get install -y maven docker.io && \
     rm -rf /var/lib/apt/lists/*
 
-# Désactiver tout ce qui utilise le keyring (pour éviter l’erreur)
+# Désactiver le keyring et désactiver Kerberos
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Dorg.jenkinsci.plugins.keyring=false"
 ENV _JAVA_OPTIONS="-Djava.security.krb5.disableKeyTab=true"
 
-# Retour à l'utilisateur jenkins
+# Retour à l'utilisateur Jenkins
 USER jenkins
