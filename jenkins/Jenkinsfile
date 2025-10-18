@@ -35,9 +35,25 @@ pipeline {
     post {
         success {
             echo '✅ Build réussie !'
+            script {
+                sh '''
+                curl -H "Content-Type: application/json" \
+                     -X POST \
+                     -d '{"content": "✅ Build réussi sur Jenkins pour Maintenance_Backend ! 🎉"}' \
+                     "https://discord.com/api/webhooks/TON_WEBHOOK_ICI"
+                '''
+            }
         }
         failure {
             echo '❌ Échec de la build.'
+            script {
+                sh '''
+                curl -H "Content-Type: application/json" \
+                     -X POST \
+                     -d '{"content": "❌ Build échoué sur Jenkins pour Maintenance_Backend 💥"}' \
+                     "https://discord.com/api/webhooks/TON_WEBHOOK_ICI"
+                '''
+            }
         }
     }
 }
