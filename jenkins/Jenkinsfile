@@ -28,7 +28,6 @@ pipeline {
         stage('Test Reports') {
             steps {
                 junit 'Maintenance_Backend/target/surefire-reports/*.xml'
-                jacoco execPattern: 'Maintenance_Backend/target/*.exec'
             }
         }
 
