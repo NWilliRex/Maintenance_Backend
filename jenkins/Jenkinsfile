@@ -33,9 +33,11 @@ pipeline {
 
         stage('JavaDoc') {
             steps {
-                echo "📚 Génération de la JavaDoc..."
-                sh 'mvn javadoc:javadoc'
-                archiveArtifacts artifacts: 'target/site/apidocs/**', fingerprint: true
+                dir('Maintenance_Backend') { 
+                    echo '📚 Génération de la JavaDoc...'
+                    sh 'mvn javadoc:javadoc'
+                    archiveArtifacts artifacts: 'target/site/apidocs/**', fingerprint: true
+                }
             }
         }
 
