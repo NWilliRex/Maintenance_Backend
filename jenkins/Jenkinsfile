@@ -40,7 +40,7 @@ pipeline {
                 curl -H "Content-Type: application/json" \
                      -X POST \
                      -d '{"content": "✅ Build réussi sur Jenkins pour Maintenance_Backend ! 🎉"}' \
-                     "https://discord.com/api/webhooks/TON_WEBHOOK_ICI"
+                     "https://discord.com/api/webhooks/1428945933177196716/DVFdGRP79ixTtzyrR1bdj8D_vkvMFn2TPj5Q7z8AD5MwOSFo26YPOccoYTb9loGyh_M2"
                 '''
             }
         }
@@ -51,7 +51,7 @@ pipeline {
                 curl -H "Content-Type: application/json" \
                      -X POST \
                      -d '{"content": "❌ Build échoué sur Jenkins pour Maintenance_Backend 💥"}' \
-                     "https://discord.com/api/webhooks/TON_WEBHOOK_ICI"
+                     "https://discord.com/api/webhooks/1428945933177196716/DVFdGRP79ixTtzyrR1bdj8D_vkvMFn2TPj5Q7z8AD5MwOSFo26YPOccoYTb9loGyh_M2"
                 '''
             }
         }
