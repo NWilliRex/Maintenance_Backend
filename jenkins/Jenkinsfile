@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo '📥 Clonage du projet Maven depuis GitHub...'
+                git branch: 'test/alex',
+                    url: 'https://github.com/NWilliRex/Maintenance_Backend.git'
+            }
+        }
+
+        stage('Build & Package') {
+            steps {
+                echo '⚙️ Compilation et packaging du projet Maven...'
+                dir('Maintenance_Backend') {
+                    sh 'mvn clean package -DskipTests=false'
+                }
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            }
+        }
+
+        stage('Test Reports') {
+            steps {
+                junit 'Maintenance_Backend/target/surefire-reports/*.xml'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Build réussie !'
+        }
+        failure {
+            echo '❌ Échec de la build.'
+        }
+    }
+}
