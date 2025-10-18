@@ -27,12 +27,14 @@ pipeline {
             }
             post {
                 always {
-                    echo '📊 Publication des rapports de tests...'
-                    junit 'Maintenance_Backend/target/surefire-reports/*.xml'
-                    jacoco execPattern: 'Maintenance_Backend/target/jacoco.exec',
-                           classPattern: 'Maintenance_Backend/target/classes',
-                           sourcePattern: 'Maintenance_Backend/src/main/java',
-                           exclusionPattern: ''
+                    echo "📊 Publication des rapports de tests..."
+                    junit '**/target/surefire-reports/*.xml'
+
+                    // Publication du rapport JaCoCo
+                    recordCoverage(
+                        tools: [jacoco(pattern: '**/target/site/jacoco/jacoco.xml')],
+                        sourceDirectories: [[path: 'src/main/java']]
+                    )
                 }
             }
         }
