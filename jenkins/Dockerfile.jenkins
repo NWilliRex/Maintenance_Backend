@@ -5,11 +5,12 @@ USER root
 # Installer Java 21 et Maven
 RUN apt-get update && \
     apt-get install -y openjdk-21-jdk maven && \
-    apt-get clean
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Définir JAVA_HOME
+# Définir JAVA_HOME (utile pour Jenkins et Maven)
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
-ENV PATH="$JAVA_HOME/bin:${PATH}"
+ENV PATH="$JAVA_HOME/bin:$PATH"
 
 # Revenir à l'utilisateur Jenkins
 USER jenkins
