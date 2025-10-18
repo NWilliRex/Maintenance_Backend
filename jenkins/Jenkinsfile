@@ -10,7 +10,7 @@ pipeline {
             }
         }
 
-        stage('Build & Package') {
+        stage('Build & Package (Maven)') {
             steps {
                 echo '⚙️ Compilation et packaging du projet Maven...'
                 dir('Maintenance_Backend') {
@@ -37,8 +37,8 @@ pipeline {
                 echo '🐳 Construction de l’image Docker...'
                 dir('Maintenance_Backend') {
                     sh """
-                    docker build -t 2391650/maintenance_backend:${BUILD_NUMBER} .
-                    docker tag 2391650/maintenance_backend:${BUILD_NUMBER} 2391650/maintenance_backend:latest
+                    docker build -t monapp:${BUILD_NUMBER} .
+                    docker tag monapp:${BUILD_NUMBER} monapp:latest
                     """
                 }
             }
@@ -48,10 +48,10 @@ pipeline {
             steps {
                 echo '🚀 Test du container Docker...'
                 sh """
-                docker run --rm -d --name maintenance_backend-test 2391650/maintenance_backend:${BUILD_NUMBER}
+                docker run --rm -d --name monapp-test monapp:${BUILD_NUMBER}
                 sleep 5
-                docker ps | grep maintenance_backend-test
-                docker stop maintenance_backend-test
+                docker ps | grep monapp-test
+                docker stop monapp-test
                 """
             }
         }
