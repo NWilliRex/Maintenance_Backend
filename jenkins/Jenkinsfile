@@ -10,7 +10,7 @@ pipeline {
             }
         }
 
-        stage('Build & Package (Maven)') {
+        stage('Build & Package') {
             steps {
                 echo '⚙️ Compilation et packaging du projet Maven...'
                 dir('Maintenance_Backend') {
@@ -28,30 +28,6 @@ pipeline {
         stage('Test Reports') {
             steps {
                 junit 'Maintenance_Backend/target/surefire-reports/*.xml'
-            }
-        }
-
-        stage('Docker Build') {
-            steps {
-                echo '🐳 Construction de l’image Docker...'
-                dir('Maintenance_Backend') {
-                    sh """
-                    docker build -t monapp:${BUILD_NUMBER} .
-                    docker tag monapp:${BUILD_NUMBER} monapp:latest
-                    """
-                }
-            }
-        }
-
-        stage('Docker Test Run') {
-            steps {
-                echo '🚀 Test du container Docker...'
-                sh """
-                docker run --rm -d --name monapp-test monapp:${BUILD_NUMBER}
-                sleep 5
-                docker ps | grep monapp-test
-                docker stop monapp-test
-                """
             }
         }
     }
