@@ -1,14 +1,15 @@
-FROM jenkins/jenkins:lts-jdk17
+FROM jenkins/jenkins:lts
 
 USER root
 
-# Installer Maven et Docker CLI
+# Installer Java 21 et Maven
 RUN apt-get update && \
-    apt-get install -y maven docker.io && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y openjdk-21-jdk maven && \
+    apt-get clean
 
-# Désactiver certains warnings Java
-ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Dorg.jenkinsci.plugins.keyring=false"
-ENV _JAVA_OPTIONS="-Djava.security.krb5.disableKeyTab=true"
+# Définir JAVA_HOME
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH="$JAVA_HOME/bin:${PATH}"
 
+# Revenir à l'utilisateur Jenkins
 USER jenkins
