@@ -5,7 +5,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo '📥 Clonage du projet Maven depuis GitHub...'
-                git branch: 'test/alex', url: 'https://github.com/NWilliRex/Maintenance_Backend.git'
+                git branch: 'test/alex',
+                    url: 'https://github.com/NWilliRex/Maintenance_Backend.git'
             }
         }
 
@@ -13,28 +14,7 @@ pipeline {
             steps {
                 echo '⚙️ Compilation et packaging du projet Maven...'
                 dir('Maintenance_Backend') {
-                    sh 'mvn clean package -DskipTests=true'
-                }
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo '🧪 Exécution des tests unitaires et d’intégration...'
-                dir('Maintenance_Backend') {
-                    sh 'mvn test verify'
-                }
-            }
-            post {
-                always {
-                    echo "📊 Publication des rapports de tests..."
-                    junit '**/target/surefire-reports/*.xml'
-
-                    // Publication du rapport JaCoCo
-                    recordCoverage(
-                        tools: [jacoco(pattern: '**/target/site/jacoco/jacoco.xml')],
-                        sourceDirectories: [[path: 'src/main/java']]
-                    )
+                    sh 'mvn clean package -DskipTests=false'
                 }
             }
         }
@@ -42,6 +22,12 @@ pipeline {
         stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            }
+        }
+
+        stage('Test Reports') {
+            steps {
+                junit 'Maintenance_Backend/target/surefire-reports/*.xml'
             }
         }
     }
