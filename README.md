@@ -30,91 +30,67 @@ cd Maintenance_Backend
 
 ---
 
-### 🔹 2. Compiler et exécuter avec Maven
-```bash
-mvn clean package
-java -jar target/*.jar
-```
+## 🐳 Exécution avec Docker
 
-La documentation JavaDoc sera générée dans :
-```
-target/site/apidocs/index.html
-```
+1. Se placer dans le répertoire du projet :
+   ```bash
+   cd Maintenance_Backend/
+   ```
 
----
+2. Lancer le conteneur Docker avec Compose :
+   ```bash
+   docker compose up -d
+   ```
 
-### 🔹 3. Exécuter avec Docker
-
-#### 🧱 Construire l’image
-```bash
-docker build -t maintenance_backend .
-```
-
-#### ▶️ Lancer le conteneur
-```bash
-docker run -d -p 8080:8080 --name maintenance_backend maintenance_backend
-```
-
-Le backend sera accessible à :
-```
-http://localhost:8080
-```
+Cela va automatiquement construire et exécuter le backend dans un conteneur accessible via le port configuré dans le `docker-compose.yml`.
 
 ---
 
-### 🔹 4. Pipeline Jenkins
+## ☕ Exécution avec Maven (via Makefile)
 
-Le projet utilise **un pipeline Jenkinsfile** qui exécute les étapes suivantes :
+1. Compiler le projet :
+   ```bash
+   make build
+   ```
 
-| Étape | Description |
-|--------|--------------|
-| 🧩 **Build** | Compilation du code via Maven |
-| 🧪 **Tests** | Exécution des tests unitaires et d’intégration |
-| 📚 **JavaDoc** | Génération de la documentation dans `/target/site/apidocs` |
-| 🚀 **Notification Discord** | Envoi d’un message en cas de succès ou d’échec du build |
+2. Lancer le projet :
+   ```bash
+   make run
+   ```
 
-Exemple de commande pour déclencher manuellement :
-```bash
-mvn clean verify
-```
+Le backend sera ensuite disponible à `http://localhost:9090` (ou selon la configuration).
 
 ---
 
-## 🧭 Documentation
+## ⚙️ Configuration de Jenkins
 
-### 🔸 JavaDoc
-Accessible après le build à :  
-`target/site/apidocs/index.html`
+1. Se placer dans le dossier Jenkins :
+   ```bash
+   cd jenkins/
+   ```
 
-Si publié par Jenkins :  
-👉 via le lien **JavaDoc** dans la page du job.
+2. Démarrer Jenkins avec Docker Compose :
+   ```bash
+   docker compose up -d
+   ```
 
----
+3. Afficher les logs pour récupérer le mot de passe initial :
+   ```bash
+   docker logs docker-jenkins
+   ```
 
-### 🔸 Stack Technique Documentée
+4. Ouvrir Jenkins dans le navigateur à l’adresse configurée (par défaut `http://localhost:8080`), puis :
+   - Copier le mot de passe affiché dans les logs et le coller dans la page Jenkins.
+   - Installer les **plugins recommandés**.
+   - Installer manuellement les plugins **Discord Notifier** et **Maven Integration**.
 
-| Élément | Détails |
-|----------|----------|
-| **Backend** | Spring Boot Java 21 |
-| **Frontend** | (à préciser si applicable) |
-| **Base de données** | (à préciser si applicable) |
-| **CI/CD** | Jenkins exécuté dans un conteneur Docker |
-| **Gestionnaire de build** | Maven |
-| **Conteneurisation** | Docker (avec `Dockerfile` et `docker-compose.yml`) |
-| **Tests** | JUnit + JaCoCo |
-| **Documentation** | JavaDoc générée via `mvn javadoc:javadoc` |
+5. Créer un **Pipeline** avec ces paramètres :
+   - Type : `Pipeline script from SCM`
+   - SCM : `Git`
+   - URL : *Lien GitHub du projet*
+   - Path du script : `jenkins/Jenkinsfile`
 
----
-
-## 🧩 Commandes utiles (Makefile)
-
-| Commande | Description |
-|-----------|--------------|
-| `make build` | Compile le projet avec Maven |
-| `make test` | Exécute les tests |
-| `make javadoc` | Génère la documentation JavaDoc |
-| `make docker-build` | Construit l’image Docker |
-| `make docker-run` | Lance le conteneur |
+6. Lancer le pipeline : il exécutera automatiquement les étapes de build, test et déploiement.
 
 ---
 
