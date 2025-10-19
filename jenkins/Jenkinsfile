@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo '📥 Clonage du projet Maven depuis GitHub...'
+                git branch: 'test/alex',
+                    url: 'https://github.com/NWilliRex/Maintenance_Backend.git'
+            }
+        }
+
+        stage('Build & Package') {
+            steps {
+                echo '⚙️ Compilation et packaging du projet Maven...'
+                dir('Maintenance_Backend') {
+                    sh 'mvn clean package -DskipTests=false'
+                }
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            }
+        }
+
+        stage('Test Reports') {
+            steps {
+                junit 'Maintenance_Backend/target/surefire-reports/*.xml'
+            }
+        }
+
+        stage('JavaDoc') {
+            steps {
+                dir('Maintenance_Backend') { 
+                    echo '📚 Génération de la JavaDoc...'
+                    sh 'mvn javadoc:javadoc'
+                    archiveArtifacts artifacts: 'target/site/apidocs/**', fingerprint: true
+                }
+            }
+        }
+
+    }
+
+    post {
+        success {
+            echo '✅ Build réussie !'
+            script {
+                sh '''
+                curl -H "Content-Type: application/json" \
+                     -X POST \
+                     -d '{"content": "✅ Build réussi sur Jenkins pour Maintenance_Backend ! 🎉"}' \
+                     "https://discord.com/api/webhooks/1428945933177196716/DVFdGRP79ixTtzyrR1bdj8D_vkvMFn2TPj5Q7z8AD5MwOSFo26YPOccoYTb9loGyh_M2"
+                '''
+            }
+        }
+        failure {
+            echo '❌ Échec de la build.'
+            script {
+                sh '''
+                curl -H "Content-Type: application/json" \
+                     -X POST \
+                     -d '{"content": "❌ Build échoué sur Jenkins pour Maintenance_Backend 💥"}' \
+                     "https://discord.com/api/webhooks/1428945933177196716/DVFdGRP79ixTtzyrR1bdj8D_vkvMFn2TPj5Q7z8AD5MwOSFo26YPOccoYTb9loGyh_M2"
+                '''
+            }
+        }
+    }
+}

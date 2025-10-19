@@ -1,0 +1,18 @@
+# ===============================
+# STAGE 1: Generate JaCoCo
+# ===============================
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS build
+WORKDIR /build
+COPY . .
+# Generate JaCoCo into /build/target/site/jacoco
+RUN mvn clean test jacoco:report
+
+# ===============================
+# STAGE 2: Serve JaCoCo
+# ===============================
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+# Copy generated docs from the build stage
+COPY --from=build /build/target/site/jacoco/ ./
+EXPOSE 9092
+CMD ["nginx", "-g", "daemon off;"]
